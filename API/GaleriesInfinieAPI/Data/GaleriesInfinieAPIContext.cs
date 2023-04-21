@@ -43,8 +43,8 @@ namespace GaleriesInfinieAPI.Data
             U2.PasswordHash = hasher.HashPassword(U2, "Varchar!32");
             builder.Entity<User>().HasData(U2);
 
-            Galerie G1 = new Galerie { Id = 1, Name = "Photos de Vacances", ImageUrl = "aaaaa/aaaa.img", Private = true };
-            Galerie G2 = new Galerie { Id = 2, Name = "Photos de SCP-096", ImageUrl = "aaaaa/aaaa.img", Private = false };
+            Galerie G1 = new Galerie { Id = 1, Name = "Photos de Vacances",  Private = true};
+            Galerie G2 = new Galerie { Id = 2, Name = "Photos de SCP-096", Private = false};
 
             builder.Entity<Galerie>().HasData(G1);
             builder.Entity<Galerie>().HasData(G2);

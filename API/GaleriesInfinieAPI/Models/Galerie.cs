@@ -12,7 +12,9 @@ namespace GaleriesInfinieAPI.Models
         [Required]
         public string Name { get; set; } = null!;
 
-        public string ImageUrl { get; set; } = null!;
+        public string? FileName { get; set; } 
+
+        public string? MimeType { get; set; }
 
         
         public bool Private { get; set; } = true;

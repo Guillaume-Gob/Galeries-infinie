@@ -83,7 +83,7 @@ namespace GaleriesInfinieAPI.Controllers
             }
             UpdateGalerie.Private = galerie.Private;
             UpdateGalerie.Name = galerie.Name;
-            UpdateGalerie.ImageUrl = galerie.ImageUrl;
+            
             
             
 

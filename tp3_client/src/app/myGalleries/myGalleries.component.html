@@ -23,7 +23,7 @@
         <input type="text" [(ngModel)]="InputNom" name="newGalleryName" placeholder="Nom de la galerie">
 
         <!-- Pas d'image de couverture pour le moment, n'utilisez pas cet input ! -->
-        <input type="file" name="newGalleryCoverPicture">
+        <input #myPictureViewChild type="file" name="newGalleryCoverPicture" accept="images/*">
 
         <!-- Cet input peut être relié à une variable booléenne -->
         <input type="checkbox" [checked]="InputPublic" (change)="InputPublic = !InputPublic" name="newGalleryIsPublic">Publique

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "v8h9rgMWxl+8lPvMQE9oac9/tnGABXzMoU/2GrY55U4rfDm8IswsmTpMU7hDm0Z6O1qiKFiWfrjpENiMINOtxA==",
+  "dgSpecHash": "jHI7Tfl5VLNdnQr5cs15DkRNjr2qjfvFnMi1+4r/FHuxI1sdUmF2a42p/rXA/tN4IVaj6ZcCS8uICeuOmbueqg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\2028873\\Desktop\\ProgWebService-TP3\\API\\GaleriesInfinieAPI\\GaleriesInfinieAPI.csproj",
+  "projectFilePath": "C:\\Users\\2028873\\Desktop\\TP4-ProgWebService\\API\\GaleriesInfinieAPI\\GaleriesInfinieAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\2028873\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
     "C:\\Users\\2028873\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
