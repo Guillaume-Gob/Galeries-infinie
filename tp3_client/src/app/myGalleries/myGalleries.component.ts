@@ -19,7 +19,6 @@ export class MyGalleriesComponent implements OnInit {
 
   InputPublic? : boolean;
   InputNom? : string;
-  InputImageUrl : string = "aaaaa/aaaa.img"
   InputUsername? : string; 
                                 
 
@@ -81,15 +80,18 @@ this.getGalleries()
                console.log("pas d'image")
               return;
               }
-              let file = this.pictureInput.nativeElement.Files[0];
+              let file = this.pictureInput.nativeElement.files[0];
                 if(file == null){
                     console.log("pas d'image dans le upload")
                                 }
                 let formdata = new FormData();
                  formdata.append("monImage",file, file.name);
-               let nouvGalerie = new Galerie(0,this.InputNom, this.InputImageUrl, !this.InputPublic)
+                 formdata.append("NomGalerie", this.InputNom)
+                 formdata.append("isPublic", this.InputPublic.toString())
 
-              await this.service.PostGalerie(nouvGalerie)
+               let nouvGalerie = new Galerie(0,this.InputNom, !this.InputPublic)
+
+              await this.service.PostGalerie(formdata)
 
             
               this.getGalleries()

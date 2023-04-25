@@ -19,7 +19,7 @@ async getmyGalleries() : Promise<Galerie[]>{
   let x = await lastValueFrom(this.http.get<any>(this.Domainegalerie+"GetMyGaleries"))
   console.log(x)
     for(let i =0; i< x.length; i++){
-  this.galeries.push(new Galerie(x[i].id,x[i].name,x[i].imageUrl,x[i].private))
+  this.galeries.push(new Galerie(x[i].id,x[i].name,x[i].private))
        
     }
     return this.galeries
@@ -44,7 +44,7 @@ async PutGallerie(pgal : Galerie) : Promise<void>{
   let x = await lastValueFrom(this.http.get<any>(this.Domainegalerie+"GetAllPublic"))
   console.log(x)
     for(let i =0; i< x.length; i++){
-  this.galeries.push(new Galerie(x[i].id,x[i].name,x[i].imageUrl,x[i].private))
+  this.galeries.push(new Galerie(x[i].id,x[i].name,x[i].private))
   
     }
     return this.galeries
@@ -64,9 +64,9 @@ async PutGallerie(pgal : Galerie) : Promise<void>{
 
   }
 
-  async PostGalerie(pGal : Galerie): Promise<void>{
+  async PostGalerie(pForm : FormData): Promise<void>{
           
-      let x = await lastValueFrom(this.http.post<any>(this.Domainegalerie+"PostGalerie", pGal))
+      let x = await lastValueFrom(this.http.post<any>(this.Domainegalerie+"PostGalerie", pForm))
       console.log(x)
       
 

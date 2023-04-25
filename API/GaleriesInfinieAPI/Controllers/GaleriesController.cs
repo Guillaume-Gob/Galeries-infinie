@@ -155,8 +155,10 @@ namespace GaleriesInfinieAPI.Controllers
         // POST: api/Galeries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Galerie>> PostGalerie(Galerie galerie)
+        [DisableRequestSizeLimit]
+        public async Task<ActionResult<Galerie>> PostGalerie()
         {
+            Galerie galerie = new Galerie();
           if (_context.Galerie == null)
           {
               return Problem("Entity set 'GaleriesInfinieAPIContext.Galerie'  is null.");
@@ -166,6 +168,51 @@ namespace GaleriesInfinieAPI.Controllers
             {
                 return Unauthorized("Il n'y a pas de user connecter");
             }
+            string? NomGalerie = Request.Form["NomGalerie"];
+            string? IspublicString = Request.Form["isPublic"];
+            if (NomGalerie == null || IspublicString == null)
+            {
+
+                return BadRequest(new { Message = "Un ou plusieurs champs vide" });
+            }
+
+            try
+            {
+                IFormCollection formCollection = await Request.ReadFormAsync();
+                IFormFile? file = formCollection.Files.GetFile("monImage");
+                if (file != null)
+                {
+                    Image image = Image.Load(file.OpenReadStream());
+                    galerie.FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    galerie.MimeType = file.ContentType;
+
+                    image.Save(Directory.GetCurrentDirectory() + "/images/original/" + galerie.FileName);
+                    image.Mutate(i => i.Resize(new ResizeOptions()
+                    {
+                        Mode = ResizeMode.Min,
+                        Size = new Size() { Width = 320 }
+
+                    }));
+                    image.Save(Directory.GetCurrentDirectory() + "/images/miniature/"+ galerie.FileName);
+
+                    bool IsPrivate = bool.Parse(IspublicString);
+                  
+                        galerie.Private = IsPrivate;
+                    galerie.Name = NomGalerie;
+                    
+                }
+                else
+                {
+                    return NotFound(new { Message = " Aucune image n'a été envoyé" });
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+
             galerie.Propriétaires = new List<User>();
             galerie.Propriétaires.Add(user);
             _context.Galerie.Add(galerie);

@@ -546,3 +546,4 @@ C:\Users\2028873\Desktop\TP4-ProgWebService\API\GaleriesInfinieAPI\obj\Debug\net
 C:\Users\2028873\Desktop\TP4-ProgWebService\API\GaleriesInfinieAPI\obj\Debug\net6.0\GaleriesInfinieAPI.csproj.CopyComplete
 C:\Users\2028873\Desktop\TP4-ProgWebService\API\GaleriesInfinieAPI\obj\Debug\net6.0\GaleriesInfinieAPI.genruntimeconfig.cache
 C:\Users\2028873\Desktop\TP4-ProgWebService\API\GaleriesInfinieAPI\obj\Debug\net6.0\ref\GaleriesInfinieAPI.dll
+C:\Users\2028873\Desktop\TP4-ProgWebService\API\GaleriesInfinieAPI\bin\Debug\net6.0\SixLabors.ImageSharp.dll
