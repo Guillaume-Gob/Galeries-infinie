@@ -4,6 +4,8 @@ using GaleriesInfinieAPI.Data;
 using GaleriesInfinieAPI.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using System.Text.RegularExpressions;
 
 namespace GaleriesInfinieAPI.Controllers
 {
@@ -249,6 +251,30 @@ namespace GaleriesInfinieAPI.Controllers
 
             return Ok( new {Message = "La galerie a été supprimer" });
         }
+        [HttpGet("{size}/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPhotoGalerie(string size, int id) 
+        {
+            if (_context.Galerie == null)
+            {
+                return NotFound();
+            }
+
+            Galerie? galerie = await _context.Galerie.FindAsync(id);
+            if (galerie == null || galerie.FileName == null || galerie.MimeType == null)
+            {
+                return NotFound(new { Message = "La galerie n'existe pas ou n'a pas de photo" });
+            }
+
+            if(!Regex.Match(size, "original|miniature").Success){
+
+                return BadRequest(new { Message = "La taille demande n'existe pas" });
+            }
+            byte[] bytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/" + size + "/" + galerie.FileName);
+            return File(bytes, galerie.MimeType);
+
+        }
+
 
         private bool GalerieExists(int id)
         {
