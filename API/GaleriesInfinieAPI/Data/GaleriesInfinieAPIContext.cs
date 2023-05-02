@@ -43,11 +43,30 @@ namespace GaleriesInfinieAPI.Data
             U2.PasswordHash = hasher.HashPassword(U2, "Varchar!32");
             builder.Entity<User>().HasData(U2);
 
-            Galerie G1 = new Galerie { Id = 1, Name = "Photos de Vacances",  Private = true};
-            Galerie G2 = new Galerie { Id = 2, Name = "Photos de SCP-096", Private = false};
+            Galerie G1 = new Galerie { Id = 1, Name = "Photos de Vacances",  Private = true, FileName = "8F8BC7A2-01A4-40CD-80FB-34B401A038A1.jfif", MimeType = "image/jfif" };
+
+            Galerie G2 = new Galerie { Id = 2, Name = "Photos de SCP-096", Private = false, FileName = "B5669E0D-8906-49E5-9963-EFB5913EE6AC.png" , MimeType = "image/png"};
 
             builder.Entity<Galerie>().HasData(G1);
+            byte[] file = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/original/" + G1.FileName);
+            Image image = Image.Load(file);
+            image.Mutate(i => i.Resize(new ResizeOptions()
+            {
+                Mode = ResizeMode.Min
+             ,
+                Size = new Size() { Width = 320 }
+            }));
+            image.Save(Directory.GetCurrentDirectory() + "/images/miniature/" + G1.FileName);
             builder.Entity<Galerie>().HasData(G2);
+            byte[] file2 = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/original/" + G2.FileName);
+            Image image2 = Image.Load(file2);
+            image.Mutate(i => i.Resize(new ResizeOptions()
+            {
+                Mode = ResizeMode.Min
+             ,
+                Size = new Size() { Width = 320 }
+            }));
+            image.Save(Directory.GetCurrentDirectory() + "/images/miniature/" + G2.FileName);
             builder.Entity<Galerie>()
                 .HasMany(g => g.Propriétaires)
                 .WithMany(u => u.Galeries)

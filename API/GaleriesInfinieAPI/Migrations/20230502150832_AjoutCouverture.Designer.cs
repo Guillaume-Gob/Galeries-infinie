@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaleriesInfinieAPI.Migrations
 {
     [DbContext(typeof(GaleriesInfinieAPIContext))]
-    [Migration("20230405213417_initial")]
-    partial class initial
+    [Migration("20230502150832_AjoutCouverture")]
+    partial class AjoutCouverture
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,8 +32,10 @@ namespace GaleriesInfinieAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MimeType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -51,20 +53,22 @@ namespace GaleriesInfinieAPI.Migrations
                         new
                         {
                             Id = 1,
-                            ImageUrl = "aaaaa/aaaa.img",
+                            FileName = "8F8BC7A2-01A4-40CD-80FB-34B401A038A1.jfif",
+                            MimeType = "image/jfif",
                             Name = "Photos de Vacances",
                             Private = true
                         },
                         new
                         {
                             Id = 2,
-                            ImageUrl = "aaaaa/aaaa.img",
+                            FileName = "B5669E0D-8906-49E5-9963-EFB5913EE6AC.png",
+                            MimeType = "image/png",
                             Name = "Photos de SCP-096",
                             Private = false
                         });
                 });
 
-            modelBuilder.Entity("GaleriesInfinieAPI.Models.Utilisateur", b =>
+            modelBuilder.Entity("GaleriesInfinieAPI.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -131,39 +135,39 @@ namespace GaleriesInfinieAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2FB4F664 - 2E39 - 4C56 - BC88 - 1DA9DFA859F8",
+                            Id = "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "23c3193b-bf11-43ef-8a8e-429043267f35",
+                            ConcurrencyStamp = "48d10c04-c4d1-451e-b7c6-d0bb092ada99",
                             Email = "Hotmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "HOTMAIL@HOTMAIL.CA",
                             NormalizedUserName = "MAURICE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEQFRmOsqLePuGJ4NVqbPI7hlrGjVHQjauDptdjmD/pv00uzHeri3yi1dS2mU8Vy9g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFHaYK4FBAB2oewBBHqAJGaVDOKU9zMz40K6cjyXMwlVjUpm1xGOcuJDeyp+5alFNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "738b1d31-33da-4ac4-91ec-42b9df9e4b7b",
+                            SecurityStamp = "714af2c7-d978-46c7-91e5-a827451b9919",
                             TwoFactorEnabled = false,
                             UserName = "Maurice"
                         },
                         new
                         {
-                            Id = "00E5F11B - 096E-43F0 - B98B - EEE5F672B7B7",
+                            Id = "00E5F11B-096E-43F0-B98B-EEE5F672B7B7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4e44ebce-4cc7-4023-bbdc-251de2b25264",
+                            ConcurrencyStamp = "455b5c1e-5ff2-47e2-8965-bb72ac78aa74",
                             Email = "Gmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "GMAIL@HOTMAIL.CA",
                             NormalizedUserName = "JEAN-GUY",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOuiVFIBt8KXO6nFkSALbwaxEv0SI2Jkbqw6gwiZET7vzPJPzHvBDiAkPJBiA1nZhw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEINUXtLhF8hF28wvwdkWECnrFEaaJ2Z3b1K5tGe5/9RMZ0tsWvvqt3QkiuWygSdcqw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "805f89e2-1c50-4563-90a9-9b2b3b2fed95",
+                            SecurityStamp = "6cd6f17b-74fc-46e1-a188-8ef52ed0c5aa",
                             TwoFactorEnabled = false,
                             UserName = "Jean-Guy"
                         });
                 });
 
-            modelBuilder.Entity("GalerieUtilisateur", b =>
+            modelBuilder.Entity("GalerieUser", b =>
                 {
                     b.Property<int>("GaleriesId")
                         .HasColumnType("int");
@@ -175,18 +179,18 @@ namespace GaleriesInfinieAPI.Migrations
 
                     b.HasIndex("PropriétairesId");
 
-                    b.ToTable("GalerieUtilisateur");
+                    b.ToTable("GalerieUser");
 
                     b.HasData(
                         new
                         {
                             GaleriesId = 1,
-                            PropriétairesId = "2FB4F664 - 2E39 - 4C56 - BC88 - 1DA9DFA859F8"
+                            PropriétairesId = "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8"
                         },
                         new
                         {
                             GaleriesId = 2,
-                            PropriétairesId = "00E5F11B - 096E-43F0 - B98B - EEE5F672B7B7"
+                            PropriétairesId = "00E5F11B-096E-43F0-B98B-EEE5F672B7B7"
                         });
                 });
 
@@ -323,7 +327,7 @@ namespace GaleriesInfinieAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("GalerieUtilisateur", b =>
+            modelBuilder.Entity("GalerieUser", b =>
                 {
                     b.HasOne("GaleriesInfinieAPI.Models.Galerie", null)
                         .WithMany()
@@ -331,7 +335,7 @@ namespace GaleriesInfinieAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GaleriesInfinieAPI.Models.Utilisateur", null)
+                    b.HasOne("GaleriesInfinieAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("PropriétairesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -349,7 +353,7 @@ namespace GaleriesInfinieAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("GaleriesInfinieAPI.Models.Utilisateur", null)
+                    b.HasOne("GaleriesInfinieAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -358,7 +362,7 @@ namespace GaleriesInfinieAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("GaleriesInfinieAPI.Models.Utilisateur", null)
+                    b.HasOne("GaleriesInfinieAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -373,7 +377,7 @@ namespace GaleriesInfinieAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GaleriesInfinieAPI.Models.Utilisateur", null)
+                    b.HasOne("GaleriesInfinieAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -382,7 +386,7 @@ namespace GaleriesInfinieAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("GaleriesInfinieAPI.Models.Utilisateur", null)
+                    b.HasOne("GaleriesInfinieAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

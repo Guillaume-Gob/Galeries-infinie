@@ -51,12 +51,16 @@ namespace GaleriesInfinieAPI.Migrations
                         new
                         {
                             Id = 1,
+                            FileName = "8F8BC7A2-01A4-40CD-80FB-34B401A038A1.jfif",
+                            MimeType = "image/jfif",
                             Name = "Photos de Vacances",
                             Private = true
                         },
                         new
                         {
                             Id = 2,
+                            FileName = "B5669E0D-8906-49E5-9963-EFB5913EE6AC.png",
+                            MimeType = "image/png",
                             Name = "Photos de SCP-096",
                             Private = false
                         });
@@ -131,15 +135,15 @@ namespace GaleriesInfinieAPI.Migrations
                         {
                             Id = "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "55db9e29-57bc-4239-a23e-da621c833726",
+                            ConcurrencyStamp = "48d10c04-c4d1-451e-b7c6-d0bb092ada99",
                             Email = "Hotmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "HOTMAIL@HOTMAIL.CA",
                             NormalizedUserName = "MAURICE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDOmLzQv9dyiOYNMYzR9wTQispsbCn7kqB/mfrYDpVQgndqJ2fkO6lUxyUz6mKkmKA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFHaYK4FBAB2oewBBHqAJGaVDOKU9zMz40K6cjyXMwlVjUpm1xGOcuJDeyp+5alFNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "99030c60-72c7-4c74-b7f3-cb2a7cc2b2fd",
+                            SecurityStamp = "714af2c7-d978-46c7-91e5-a827451b9919",
                             TwoFactorEnabled = false,
                             UserName = "Maurice"
                         },
@@ -147,15 +151,15 @@ namespace GaleriesInfinieAPI.Migrations
                         {
                             Id = "00E5F11B-096E-43F0-B98B-EEE5F672B7B7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2b595764-3d87-454d-8dcd-87a45269c6d7",
+                            ConcurrencyStamp = "455b5c1e-5ff2-47e2-8965-bb72ac78aa74",
                             Email = "Gmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "GMAIL@HOTMAIL.CA",
                             NormalizedUserName = "JEAN-GUY",
-                            PasswordHash = "AQAAAAEAACcQAAAAEACvwyfp3SDXdrwHiXkN/5fpVMKp0HRAJy3ucT9bOKAKmAvdyyOr/ZwW8HFBRUtqDw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEINUXtLhF8hF28wvwdkWECnrFEaaJ2Z3b1K5tGe5/9RMZ0tsWvvqt3QkiuWygSdcqw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0cad36d5-c322-44b3-abab-cdbc1024ab0d",
+                            SecurityStamp = "6cd6f17b-74fc-46e1-a188-8ef52ed0c5aa",
                             TwoFactorEnabled = false,
                             UserName = "Jean-Guy"
                         });

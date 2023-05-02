@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="images\miniature\" />
-    <Folder Include="images\original\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
