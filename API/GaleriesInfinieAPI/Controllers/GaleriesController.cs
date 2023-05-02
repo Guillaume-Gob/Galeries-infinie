@@ -14,7 +14,7 @@ namespace GaleriesInfinieAPI.Controllers
     public class GaleriesController : ControllerBase
     {
         private readonly GaleriesInfinieAPIContext _context;
-       private readonly UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
 
         public GaleriesController(GaleriesInfinieAPIContext context, UserManager<User> userManager)
         {
@@ -26,40 +26,40 @@ namespace GaleriesInfinieAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Galerie>>> GetAllPublic()
         {
-          if (_context.Galerie == null)
-          {
-              return NotFound(new {Message = "Aucun Contexte Update-Database :) " });
-          }
-          List<Galerie> reponse = new List<Galerie>();
-           reponse = await _context.Galerie.Where(g => g.Private == false).ToListAsync();
-            
+            if (_context.Galerie == null)
+            {
+                return NotFound(new { Message = "Aucun Contexte Update-Database :) " });
+            }
+            List<Galerie> reponse = new List<Galerie>();
+            reponse = await _context.Galerie.Where(g => g.Private == false).ToListAsync();
+
             return reponse;
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Galerie>>> GetMyGaleries()
         {
-           
+
             if (_context.Galerie == null)
             {
                 return NotFound(new { Message = "Aucun Contexte Update-Database :) " });
             }
-            
-              User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
 
-            
+
             if (user != null)
             {
                 List<Galerie> reponse = user.Galeries;
 
                 return reponse;
 
-            
+
             }
             else { return Unauthorized("Il n'y a pas de user connecter"); }
         }
 
-        
+
 
         // PUT: api/Galeries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -74,10 +74,10 @@ namespace GaleriesInfinieAPI.Controllers
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             if (user.Galeries.Where(g => g.Id == id).First() == null)
-            { 
-                  return Unauthorized(new {Message = "l'utilisateur n'a pas les droits de modification sur cette galerie" });
+            {
+                return Unauthorized(new { Message = "l'utilisateur n'a pas les droits de modification sur cette galerie" });
             }
-            
+
 
             Galerie UpdateGalerie = await _context.Galerie.FirstAsync(g => g.Id == id);
             if (UpdateGalerie == null) {
@@ -85,9 +85,9 @@ namespace GaleriesInfinieAPI.Controllers
             }
             UpdateGalerie.Private = galerie.Private;
             UpdateGalerie.Name = galerie.Name;
-            
-            
-            
+
+
+
 
             //_context.Entry(galerie).State = EntityState.Modified;
 
@@ -107,7 +107,45 @@ namespace GaleriesInfinieAPI.Controllers
                 }
             }
 
-            return Ok( new { Message = "Galerie Modifier! " });
+            return Ok(new { Message = "Galerie Modifier! " });
+        }
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> ChangerCouverture(int Id) {
+            if (_context.Galerie == null)
+            {
+                return Problem("Entity set 'GaleriesInfinieAPIContext.Galerie'  is null.");
+            }
+            try
+            {
+                IFormCollection formCollection = await Request.ReadFormAsync();
+                IFormFile? file = formCollection.Files.GetFile("monImage");
+                if (file != null)
+                {
+                    Galerie? galerie = await _context.Galerie.Where(g => g.Id == Id).FirstOrDefaultAsync();
+                    if (galerie == null)
+                    { return BadRequest("La galerie n'existe pas"); }
+
+                    Image image = Image.Load(file.OpenReadStream());
+                    galerie.FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    galerie.MimeType = file.ContentType;
+
+                    image.Save(Directory.GetCurrentDirectory() + "/images/original/" + galerie.FileName);
+                    image.Mutate(i => i.Resize(new ResizeOptions()
+                    {
+                        Mode = ResizeMode.Min,
+                        Size = new Size() { Width = 320 }
+
+                    }));
+                    image.Save(Directory.GetCurrentDirectory() + "/images/miniature/" + galerie.FileName);
+                     catch (Exception)
+            {
+                throw;
+            }
+            await _context.SaveChangesAsync();
+
+            return Ok(new { Message = "Galerie Créé!" });
+
+
         }
         [HttpPost("{idGalerie}")]
         public async Task<IActionResult> AddUserToGalerie(string Username, int idGalerie) {

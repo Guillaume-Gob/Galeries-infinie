@@ -11,10 +11,10 @@
 
     <div class="col-1 galleryList">
       <!-- Photos de couverture de galeries -->
-     <div *ngFor="let item of galeries" (click)="SelectGalerie(item)" class="galleryThumbnail">
-      <div>{{item.name}}</div>
-      <img src="/assets/images/galleryThumbnail.png" alt="Galerie #1">
-     </div>
+      <div  *ngFor="let item of galeries" (click)="SelectGalerie(item)" class="galleryThumbnail">
+        <div>{{item.name}}</div>
+        <img [src]="'https://localhost:7183/api/Galeries/GetPhotoGalerie/miniature/'+ item.id" alt="{{item.name}}">
+       </div>
     </div>
   
     <div class="col-4 pictureList">
@@ -62,7 +62,9 @@
       <h2>Photos de la galerie sélectionnée <mat-icon>photo_camera</mat-icon></h2>
       <div *ngIf="galerieSelectionner != null" class="galleryThumbnail">
         <div>{{galerieSelectionner.name}}</div>
-        <img src="/assets/images/galleryThumbnail.png" alt="Galerie #1">
+        <img [src]="'https://localhost:7183/api/Galeries/GetPhotoGalerie/original/'+ galerieSelectionner.id" alt="Galerie #1">
+        
+    </div>
     </div>
 
   </div>
