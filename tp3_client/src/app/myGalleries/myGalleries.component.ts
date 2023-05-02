@@ -15,12 +15,10 @@ export class MyGalleriesComponent implements OnInit {
   galeries: Galerie[] = [];
   galerieSelectionner? : Galerie;
   galerieCréé? : Galerie;
-
-
   InputPublic? : boolean;
   InputNom? : string;
   InputUsername? : string; 
-                                
+  @ViewChild("myPictureUpdate", {static:false}) pictureUpdate ? : ElementRef;                              
 
   constructor(public http : HttpClient, public service : GaleriesInfinieServiceService) { }
 
@@ -94,7 +92,7 @@ this.getGalleries()
               await this.service.PostGalerie(formdata)
 
             
-              this.getGalleries()
+           await this.getGalleries()
               }
               else{
                 console.log("un ou plusieurs champs Manquant")
@@ -104,6 +102,28 @@ this.getGalleries()
 
 
     }
+ 
+    async UpdatePicture() : Promise<void>{
+     if (this.pictureUpdate != undefined && this.galerieSelectionner != undefined)
+     {
+      let file = this.pictureUpdate.nativeElement.files[0];
+         if(file == null)
+         {
+          console.log("Pas d'image dans le upload")
+         }
+           let formdata = new FormData();
+           formdata.append("MonImage", file, file.name)
+           
+           await this.service.ChangerCouverture(formdata,this.galerieSelectionner?.id)
+           await this.getGalleries()
+     }
+     else{
+
+      console.log("pas d'image")
+     }
+
+    }
+
     async AjouterUtilisateur() : Promise<void>{
    if(this.InputUsername != undefined && this.galerieSelectionner != undefined)
       {

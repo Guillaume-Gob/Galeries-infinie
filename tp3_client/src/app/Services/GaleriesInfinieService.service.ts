@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Galerie } from 'src/Models/Galerie';
+import { Form } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,12 @@ async getmyGalleries() : Promise<Galerie[]>{
 
 async PutGallerie(pgal : Galerie) : Promise<void>{
   let x = await lastValueFrom(this.http.put<Galerie>(this.Domainegalerie+"PutGalerie/"+ pgal.id, pgal))
+ console.log(x)
+ await this.getmyGalleries()
+
+ }
+ async ChangerCouverture(pForm : FormData, GalId : number) : Promise<void>{
+  let x = await lastValueFrom(this.http.put<Galerie>(this.Domainegalerie+"ChangerCouverture/"+ GalId, pForm))
  console.log(x)
  await this.getmyGalleries()
 

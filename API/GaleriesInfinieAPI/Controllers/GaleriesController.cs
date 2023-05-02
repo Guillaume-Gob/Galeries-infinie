@@ -124,7 +124,8 @@ namespace GaleriesInfinieAPI.Controllers
                     Galerie? galerie = await _context.Galerie.Where(g => g.Id == Id).FirstOrDefaultAsync();
                     if (galerie == null)
                     { return BadRequest("La galerie n'existe pas"); }
-
+                    System.IO.File.Delete(Directory.GetCurrentDirectory() + "/images/miniature/" + galerie.FileName);
+                    System.IO.File.Delete(Directory.GetCurrentDirectory() + "/images/original/" + galerie.FileName);
                     Image image = Image.Load(file.OpenReadStream());
                     galerie.FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     galerie.MimeType = file.ContentType;
@@ -137,7 +138,9 @@ namespace GaleriesInfinieAPI.Controllers
 
                     }));
                     image.Save(Directory.GetCurrentDirectory() + "/images/miniature/" + galerie.FileName);
-                     catch (Exception)
+                }
+            }
+            catch (Exception)
             {
                 throw;
             }
