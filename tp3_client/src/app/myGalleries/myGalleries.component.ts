@@ -18,8 +18,9 @@ export class MyGalleriesComponent implements OnInit {
   InputPublic? : boolean;
   InputNom? : string;
   InputUsername? : string; 
-  @ViewChild("myPictureUpdate", {static:false}) pictureUpdate ? : ElementRef;                              
-
+  @ViewChild("myPictureUpdate", {static:false}) pictureUpdate ? : ElementRef;
+  @ViewChild("fileUploadPicture", {static:false}) AddedPicture ? : ElementRef;                                         
+       
   constructor(public http : HttpClient, public service : GaleriesInfinieServiceService) { }
 
   ngOnInit() {
@@ -124,6 +125,11 @@ this.getGalleries()
 
     }
 
+    async AddPicture() : Promise<void>{
+
+
+
+    }
     async AjouterUtilisateur() : Promise<void>{
    if(this.InputUsername != undefined && this.galerieSelectionner != undefined)
       {

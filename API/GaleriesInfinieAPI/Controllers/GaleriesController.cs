@@ -150,6 +150,15 @@ namespace GaleriesInfinieAPI.Controllers
 
 
         }
+        [HttpPut("{GalerieId}")]
+        public async Task<IActionResult> AddPhotoGalerie(int GalerieId) {
+
+
+            return Ok();
+                
+                }
+
+
         [HttpPost("{idGalerie}")]
         public async Task<IActionResult> AddUserToGalerie(string Username, int idGalerie) {
             if (_context.Galerie == null)
