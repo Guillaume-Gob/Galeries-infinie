@@ -72,7 +72,13 @@
       <div *ngIf="galerieSelectionner != null" class="galleryThumbnail">
         <div>{{galerieSelectionner.name}}</div>
         <img [src]="'https://localhost:7183/api/Galeries/GetPhotoGalerie/original/'+ galerieSelectionner.id" alt="Galerie #1">
-        
+        <div class="col-1 pictureList">
+          <!-- Photos de la galeries -->
+          <div  *ngFor="let item of galeries.Photos" class="galleryThumbnail">
+            <div>{{item.Photoid}}</div>
+            <img [src]="'https://localhost:7183/api/Galeries/GetPhotoGalerie/miniature/'+ item.Photoid" alt="Photo #1">
+           </div>
+        </div>
     </div>
     </div>
 

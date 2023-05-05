@@ -154,9 +154,46 @@ namespace GaleriesInfinieAPI.Controllers
         public async Task<IActionResult> AddPhotoGalerie(int GalerieId) {
 
 
+            
+            
             return Ok();
                 
                 }
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<IEnumerable<Photo>>> getPhotoGalerie(int GalerieId) {
+            if (_context.photo == null)
+            {
+                return NotFound();
+            }
+
+            Galerie? galerie = await _context.Galerie.FindAsync(GalerieId);
+
+
+
+            return galerie.Photos;
+        }
+        [HttpGet("{size}/{id}")]
+        public async Task<IActionResult> GetImagePhoto(int PhotoId, string size) {
+            if (_context.photo == null)
+            {
+                return NotFound();
+            }
+
+            Photo? photo = await _context.photo.FindAsync(PhotoId);
+            if (photo == null || photo.FileName == null || photo.MimeType == null)
+            {
+                return NotFound(new { Message = "La photo n'existe pas ou n'a pas de photo" });
+            }
+
+            if (!Regex.Match(size, "original|miniature").Success)
+            {
+
+                return BadRequest(new { Message = "La taille demande n'existe pas" });
+            }
+            byte[] bytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/" + size + "/" +photo.FileName);
+            return File(bytes, photo.MimeType);
+
+        }
 
 
         [HttpPost("{idGalerie}")]

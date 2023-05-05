@@ -1,3 +1,4 @@
+import { Photo } from './../../Models/Photo';
 import { RegisterDTO } from './../../Models/RegisterDTO';
 import { LoginDTO } from './../../Models/LoginDTO';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +12,7 @@ import { Form } from '@angular/forms';
 })
 export class GaleriesInfinieServiceService {
   galeries: Galerie[] = [];
+  Photos : Photo [] = [];
 private DomaineUilisateurs : string = "https://localhost:7183/api/Utilisateurs/"
 private Domainegalerie : string = "https://localhost:7183/api/Galeries/"
 constructor(public http : HttpClient) { }
@@ -55,6 +57,21 @@ async PutGallerie(pgal : Galerie) : Promise<void>{
   
     }
     return this.galeries
+  }
+  async getPhotos(GalerieId : number) : Promise<Photo[]>{
+this.Photos = [];
+
+let x = await  lastValueFrom(this.http.get<any>(this.Domainegalerie+"GetPhotoGalerie/"+ GalerieId))
+console.log(x);
+for(let i = 0 ; i < x.lenght ; i++ )
+{
+
+this.Photos.push(new Photo(x[i].PhotoId))
+
+}
+
+
+  return this.Photos
   }
 
   async Login(pLogin : LoginDTO) : Promise<void>{
