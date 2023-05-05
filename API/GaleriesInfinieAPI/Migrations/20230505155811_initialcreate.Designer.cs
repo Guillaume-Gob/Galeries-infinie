@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaleriesInfinieAPI.Migrations
 {
     [DbContext(typeof(GaleriesInfinieAPIContext))]
-    [Migration("20230502150832_AjoutCouverture")]
-    partial class AjoutCouverture
+    [Migration("20230505155811_initialcreate")]
+    partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -137,15 +137,15 @@ namespace GaleriesInfinieAPI.Migrations
                         {
                             Id = "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "48d10c04-c4d1-451e-b7c6-d0bb092ada99",
+                            ConcurrencyStamp = "a8ce4c63-374c-4838-bab7-eefb8dfc84d8",
                             Email = "Hotmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "HOTMAIL@HOTMAIL.CA",
                             NormalizedUserName = "MAURICE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFHaYK4FBAB2oewBBHqAJGaVDOKU9zMz40K6cjyXMwlVjUpm1xGOcuJDeyp+5alFNA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMX5WE+gJ/eDGWZ0+5GXrz78OSJsijYYPl1qes2VvpvWLqSEx41QhOSYLtgZu9+a1Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "714af2c7-d978-46c7-91e5-a827451b9919",
+                            SecurityStamp = "a5691b8e-d8cb-4a81-852e-48cc31815c06",
                             TwoFactorEnabled = false,
                             UserName = "Maurice"
                         },
@@ -153,15 +153,15 @@ namespace GaleriesInfinieAPI.Migrations
                         {
                             Id = "00E5F11B-096E-43F0-B98B-EEE5F672B7B7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "455b5c1e-5ff2-47e2-8965-bb72ac78aa74",
+                            ConcurrencyStamp = "d41623e5-ec2e-4c55-9843-c129d707b591",
                             Email = "Gmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "GMAIL@HOTMAIL.CA",
                             NormalizedUserName = "JEAN-GUY",
-                            PasswordHash = "AQAAAAEAACcQAAAAEINUXtLhF8hF28wvwdkWECnrFEaaJ2Z3b1K5tGe5/9RMZ0tsWvvqt3QkiuWygSdcqw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEC1FBYkwyPxP06xpzs3v7PrvXEzMnLQMuF7Eq8mRj9MDFAo2bYq4hBCA6AWg7Bc8iQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6cd6f17b-74fc-46e1-a188-8ef52ed0c5aa",
+                            SecurityStamp = "0e3c4777-acab-4df1-a216-5b109895b9e6",
                             TwoFactorEnabled = false,
                             UserName = "Jean-Guy"
                         });

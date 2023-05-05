@@ -22,6 +22,9 @@ namespace GaleriesInfinieAPI.Models
         [JsonIgnore]
         public virtual List<User>? Propriétaires { get; set; }
 
+        
+
+        
 
 
         

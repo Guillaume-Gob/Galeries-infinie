@@ -60,7 +60,7 @@ namespace GaleriesInfinieAPI.Data
             builder.Entity<Galerie>().HasData(G2);
             byte[] file2 = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/original/" + G2.FileName);
             Image image2 = Image.Load(file2);
-            image.Mutate(i => i.Resize(new ResizeOptions()
+            image2.Mutate(i => i.Resize(new ResizeOptions()
             {
                 Mode = ResizeMode.Min
              ,
