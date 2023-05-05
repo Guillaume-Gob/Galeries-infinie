@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GaleriesInfinieAPI.Migrations
 {
-    public partial class initialcreate : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,13 +194,34 @@ namespace GaleriesInfinieAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "photo",
+                columns: table => new
+                {
+                    PhotoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MimeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GalerieId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_photo", x => x.PhotoId);
+                    table.ForeignKey(
+                        name: "FK_photo_Galerie_GalerieId",
+                        column: x => x.GalerieId,
+                        principalTable: "Galerie",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "00E5F11B-096E-43F0-B98B-EEE5F672B7B7", 0, "d41623e5-ec2e-4c55-9843-c129d707b591", "Gmail@Hotmail.ca", false, false, null, "GMAIL@HOTMAIL.CA", "JEAN-GUY", "AQAAAAEAACcQAAAAEC1FBYkwyPxP06xpzs3v7PrvXEzMnLQMuF7Eq8mRj9MDFAo2bYq4hBCA6AWg7Bc8iQ==", null, false, "0e3c4777-acab-4df1-a216-5b109895b9e6", false, "Jean-Guy" },
-                    { "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8", 0, "a8ce4c63-374c-4838-bab7-eefb8dfc84d8", "Hotmail@Hotmail.ca", false, false, null, "HOTMAIL@HOTMAIL.CA", "MAURICE", "AQAAAAEAACcQAAAAEMX5WE+gJ/eDGWZ0+5GXrz78OSJsijYYPl1qes2VvpvWLqSEx41QhOSYLtgZu9+a1Q==", null, false, "a5691b8e-d8cb-4a81-852e-48cc31815c06", false, "Maurice" }
+                    { "00E5F11B-096E-43F0-B98B-EEE5F672B7B7", 0, "b7f541c3-40f9-4c00-acfa-a7a13e7fc2e1", "Gmail@Hotmail.ca", false, false, null, "GMAIL@HOTMAIL.CA", "JEAN-GUY", "AQAAAAEAACcQAAAAELXJxQtBIl4p7RctOCnS4Dv2KEz9Yptz3bJmhdG6jHyqev1h3JJmOeCrDyrL524bgQ==", null, false, "99961f25-09dc-4f0d-8157-488c2b5b7a1a", false, "Jean-Guy" },
+                    { "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8", 0, "b7910399-8113-4ca7-a2d9-d02a2be47364", "Hotmail@Hotmail.ca", false, false, null, "HOTMAIL@HOTMAIL.CA", "MAURICE", "AQAAAAEAACcQAAAAEI7gKvioCFoC9vh6vJuROiL8y3Pc04wtbJ8ptk5SpbsIc1pU89FokWvUiwcAXE8AtQ==", null, false, "4814d6bf-7413-44de-8a95-c6f66aaba5be", false, "Maurice" }
                 });
 
             migrationBuilder.InsertData(
@@ -215,12 +236,20 @@ namespace GaleriesInfinieAPI.Migrations
             migrationBuilder.InsertData(
                 table: "GalerieUser",
                 columns: new[] { "GaleriesId", "PropriétairesId" },
-                values: new object[] { 1, "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8" });
+                values: new object[,]
+                {
+                    { 1, "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8" },
+                    { 2, "00E5F11B-096E-43F0-B98B-EEE5F672B7B7" }
+                });
 
             migrationBuilder.InsertData(
-                table: "GalerieUser",
-                columns: new[] { "GaleriesId", "PropriétairesId" },
-                values: new object[] { 2, "00E5F11B-096E-43F0-B98B-EEE5F672B7B7" });
+                table: "photo",
+                columns: new[] { "PhotoId", "FileName", "GalerieId", "MimeType" },
+                values: new object[,]
+                {
+                    { 1, "E88FF195-3C28-4763-AB34-473E34C9BBB5.jpg", 1, "image/jpg" },
+                    { 2, "41EA5083-34D0-45E4-97E1-87D4866CF585.jpg", 2, "image/jpg" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -265,6 +294,11 @@ namespace GaleriesInfinieAPI.Migrations
                 name: "IX_GalerieUser_PropriétairesId",
                 table: "GalerieUser",
                 column: "PropriétairesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_photo_GalerieId",
+                table: "photo",
+                column: "GalerieId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -286,6 +320,9 @@ namespace GaleriesInfinieAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "GalerieUser");
+
+            migrationBuilder.DropTable(
+                name: "photo");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

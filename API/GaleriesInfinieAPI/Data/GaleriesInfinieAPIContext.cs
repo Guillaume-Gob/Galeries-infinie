@@ -66,7 +66,7 @@ namespace GaleriesInfinieAPI.Data
              ,
                 Size = new Size() { Width = 320 }
             }));
-            image.Save(Directory.GetCurrentDirectory() + "/images/miniature/" + G2.FileName);
+            image2.Save(Directory.GetCurrentDirectory() + "/images/miniature/" + G2.FileName);
             builder.Entity<Galerie>()
                 .HasMany(g => g.Propriétaires)
                 .WithMany(u => u.Galeries)
@@ -78,8 +78,41 @@ namespace GaleriesInfinieAPI.Data
 
                 });
 
+            Photo P1 = new Photo() { FileName = "E88FF195-3C28-4763-AB34-473E34C9BBB5.jpg", GalerieId = G1.Id, MimeType = "image/jpg", PhotoId = 1 };
+            builder.Entity<Photo>().HasData(P1);
+            byte[] file3 = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/original/" + P1.FileName);
+            Image image3 = Image.Load(file3);
+            image3.Mutate(i => i.Resize(new ResizeOptions()
+            {
+                Mode = ResizeMode.Min
+             ,
+                Size = new Size() { Width = 320 }
+            }));
+            image3.Save(Directory.GetCurrentDirectory() + "/images/miniature/" + P1.FileName);
+
+
+
+            Photo P2 = new Photo() { FileName = "41EA5083-34D0-45E4-97E1-87D4866CF585.jpg", GalerieId = G2.Id, MimeType = "image/jpg", PhotoId = 2 };
+            builder.Entity<Photo>().HasData(P2);
+            byte[] file4 = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/original/" + P2.FileName);
+            Image image4 = Image.Load(file4);
+            image4.Mutate(i => i.Resize(new ResizeOptions()
+            {
+                Mode = ResizeMode.Min
+             ,
+                Size = new Size() { Width = 320 }
+            }));
+            image4.Save(Directory.GetCurrentDirectory() + "/images/miniature/" + P2.FileName);
+
+
+            builder.Entity<Galerie>().HasMany(g => g.Photos)
+                .WithOne(p => p.Galerie);
         }
 
-        public DbSet<GaleriesInfinieAPI.Models.Galerie> Galerie { get; set; } = default!;
+    
+
+
+    public DbSet<GaleriesInfinieAPI.Models.Galerie> Galerie { get; set; } = default!;
+        public DbSet<Photo> photo { get; set; } = default!;
     }
 }

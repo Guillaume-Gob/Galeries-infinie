@@ -66,6 +66,46 @@ namespace GaleriesInfinieAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("GaleriesInfinieAPI.Models.Photo", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoId"), 1L, 1);
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GalerieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MimeType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PhotoId");
+
+                    b.HasIndex("GalerieId");
+
+                    b.ToTable("photo");
+
+                    b.HasData(
+                        new
+                        {
+                            PhotoId = 1,
+                            FileName = "E88FF195-3C28-4763-AB34-473E34C9BBB5.jpg",
+                            GalerieId = 1,
+                            MimeType = "image/jpg"
+                        },
+                        new
+                        {
+                            PhotoId = 2,
+                            FileName = "41EA5083-34D0-45E4-97E1-87D4866CF585.jpg",
+                            GalerieId = 2,
+                            MimeType = "image/jpg"
+                        });
+                });
+
             modelBuilder.Entity("GaleriesInfinieAPI.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -135,15 +175,15 @@ namespace GaleriesInfinieAPI.Migrations
                         {
                             Id = "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "73fb754b-3088-4ee8-ae96-b41a6fc60ef9",
+                            ConcurrencyStamp = "b7910399-8113-4ca7-a2d9-d02a2be47364",
                             Email = "Hotmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "HOTMAIL@HOTMAIL.CA",
                             NormalizedUserName = "MAURICE",
-                            PasswordHash = "AQAAAAEAACcQAAAAECXLlVO9Vn2gBaTKOkDpq8OTjich93BXf4m5twkaHuqN92Jv3EkgXS9PXSotYQMK0Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI7gKvioCFoC9vh6vJuROiL8y3Pc04wtbJ8ptk5SpbsIc1pU89FokWvUiwcAXE8AtQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7a324d6c-ad0a-46e9-b4cd-6a9b4fc5a4e0",
+                            SecurityStamp = "4814d6bf-7413-44de-8a95-c6f66aaba5be",
                             TwoFactorEnabled = false,
                             UserName = "Maurice"
                         },
@@ -151,15 +191,15 @@ namespace GaleriesInfinieAPI.Migrations
                         {
                             Id = "00E5F11B-096E-43F0-B98B-EEE5F672B7B7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "192f2872-9e22-4e87-9cbe-f3fed0d5b81d",
+                            ConcurrencyStamp = "b7f541c3-40f9-4c00-acfa-a7a13e7fc2e1",
                             Email = "Gmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "GMAIL@HOTMAIL.CA",
                             NormalizedUserName = "JEAN-GUY",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHmnz+6IQv90CmdWPqoOKal7rB3RYJdFWBlVJ3oIou+QVojUrsnqdoOQLcY/loveJw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELXJxQtBIl4p7RctOCnS4Dv2KEz9Yptz3bJmhdG6jHyqev1h3JJmOeCrDyrL524bgQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "11497685-254f-44a8-a842-de808663cecb",
+                            SecurityStamp = "99961f25-09dc-4f0d-8157-488c2b5b7a1a",
                             TwoFactorEnabled = false,
                             UserName = "Jean-Guy"
                         });
@@ -325,6 +365,17 @@ namespace GaleriesInfinieAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GaleriesInfinieAPI.Models.Photo", b =>
+                {
+                    b.HasOne("GaleriesInfinieAPI.Models.Galerie", "Galerie")
+                        .WithMany("Photos")
+                        .HasForeignKey("GalerieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Galerie");
+                });
+
             modelBuilder.Entity("GalerieUser", b =>
                 {
                     b.HasOne("GaleriesInfinieAPI.Models.Galerie", null)
@@ -389,6 +440,11 @@ namespace GaleriesInfinieAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GaleriesInfinieAPI.Models.Galerie", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaleriesInfinieAPI.Migrations
 {
     [DbContext(typeof(GaleriesInfinieAPIContext))]
-    [Migration("20230505155811_initialcreate")]
-    partial class initialcreate
+    [Migration("20230505174805_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,46 @@ namespace GaleriesInfinieAPI.Migrations
                             MimeType = "image/png",
                             Name = "Photos de SCP-096",
                             Private = false
+                        });
+                });
+
+            modelBuilder.Entity("GaleriesInfinieAPI.Models.Photo", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoId"), 1L, 1);
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GalerieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MimeType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PhotoId");
+
+                    b.HasIndex("GalerieId");
+
+                    b.ToTable("photo");
+
+                    b.HasData(
+                        new
+                        {
+                            PhotoId = 1,
+                            FileName = "E88FF195-3C28-4763-AB34-473E34C9BBB5.jpg",
+                            GalerieId = 1,
+                            MimeType = "image/jpg"
+                        },
+                        new
+                        {
+                            PhotoId = 2,
+                            FileName = "41EA5083-34D0-45E4-97E1-87D4866CF585.jpg",
+                            GalerieId = 2,
+                            MimeType = "image/jpg"
                         });
                 });
 
@@ -137,15 +177,15 @@ namespace GaleriesInfinieAPI.Migrations
                         {
                             Id = "2FB4F664-2E39-4C56-BC88-1DA9DFA859F8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a8ce4c63-374c-4838-bab7-eefb8dfc84d8",
+                            ConcurrencyStamp = "b7910399-8113-4ca7-a2d9-d02a2be47364",
                             Email = "Hotmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "HOTMAIL@HOTMAIL.CA",
                             NormalizedUserName = "MAURICE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMX5WE+gJ/eDGWZ0+5GXrz78OSJsijYYPl1qes2VvpvWLqSEx41QhOSYLtgZu9+a1Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI7gKvioCFoC9vh6vJuROiL8y3Pc04wtbJ8ptk5SpbsIc1pU89FokWvUiwcAXE8AtQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a5691b8e-d8cb-4a81-852e-48cc31815c06",
+                            SecurityStamp = "4814d6bf-7413-44de-8a95-c6f66aaba5be",
                             TwoFactorEnabled = false,
                             UserName = "Maurice"
                         },
@@ -153,15 +193,15 @@ namespace GaleriesInfinieAPI.Migrations
                         {
                             Id = "00E5F11B-096E-43F0-B98B-EEE5F672B7B7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d41623e5-ec2e-4c55-9843-c129d707b591",
+                            ConcurrencyStamp = "b7f541c3-40f9-4c00-acfa-a7a13e7fc2e1",
                             Email = "Gmail@Hotmail.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "GMAIL@HOTMAIL.CA",
                             NormalizedUserName = "JEAN-GUY",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC1FBYkwyPxP06xpzs3v7PrvXEzMnLQMuF7Eq8mRj9MDFAo2bYq4hBCA6AWg7Bc8iQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELXJxQtBIl4p7RctOCnS4Dv2KEz9Yptz3bJmhdG6jHyqev1h3JJmOeCrDyrL524bgQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0e3c4777-acab-4df1-a216-5b109895b9e6",
+                            SecurityStamp = "99961f25-09dc-4f0d-8157-488c2b5b7a1a",
                             TwoFactorEnabled = false,
                             UserName = "Jean-Guy"
                         });
@@ -327,6 +367,17 @@ namespace GaleriesInfinieAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GaleriesInfinieAPI.Models.Photo", b =>
+                {
+                    b.HasOne("GaleriesInfinieAPI.Models.Galerie", "Galerie")
+                        .WithMany("Photos")
+                        .HasForeignKey("GalerieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Galerie");
+                });
+
             modelBuilder.Entity("GalerieUser", b =>
                 {
                     b.HasOne("GaleriesInfinieAPI.Models.Galerie", null)
@@ -391,6 +442,11 @@ namespace GaleriesInfinieAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GaleriesInfinieAPI.Models.Galerie", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }
