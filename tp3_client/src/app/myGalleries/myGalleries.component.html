@@ -69,19 +69,20 @@
       <hr *ngIf="galerieSelectionner != null">
       <!-- Photo de la galerie sélectionnée (Partie 2 !) -->
       <h2>Photos de la galerie sélectionnée <mat-icon>photo_camera</mat-icon></h2>
-      <div *ngIf="galerieSelectionner != null" class="galleryThumbnail">
-        <div>{{galerieSelectionner.name}}</div>
-        <img [src]="'https://localhost:7183/api/Galeries/GetPhotoGalerie/original/'+ galerieSelectionner.id" alt="Galerie #1">
-        <div class="col-1 pictureList">
-          <!-- Photos de la galeries -->
-          <div  *ngFor="let item of galeries.Photos" class="galleryThumbnail">
-            <div>{{item.Photoid}}</div>
-            <img [src]="'https://localhost:7183/api/Galeries/GetPhotoGalerie/miniature/'+ item.Photoid" alt="Photo #1">
-           </div>
+      
+      <div *ngIf="galerieSelectionner != null" class="grid" #masongrid>
+        <p>{{galerieSelectionner.name}}</p>
+        <!-- Photos de la galeries -->
+          <div #masongriditems class="grid-item" *ngFor="let i of galerieSelectionner.Photos">
+            <button class="close" (click)="DeletePicture(i)"><mat-icon>delete</mat-icon></button> 
+            <img (click)="SelectPhoto(i)"  [src]="'https://localhost:7183/api/Galeries/GetImagePhoto/miniature/'+ i.Photoid">
         </div>
+        <div class="col-12" *ngIf="PhotoSelectionner != null">
+           <img [src]="'https://localhost:7183/api/Galeries/GetImagePhoto/original/'+ PhotoSelectionner.Photoid">
+        </div>
+       
     </div>
     </div>
 
   </div>
 
-</div>

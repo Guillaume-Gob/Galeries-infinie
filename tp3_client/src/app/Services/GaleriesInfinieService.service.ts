@@ -61,17 +61,18 @@ async PutGallerie(pgal : Galerie) : Promise<void>{
   async getPhotos(GalerieId : number) : Promise<Photo[]>{
 this.Photos = [];
 
-let x = await  lastValueFrom(this.http.get<any>(this.Domainegalerie+"GetPhotoGalerie/"+ GalerieId))
-console.log(x);
-for(let i = 0 ; i < x.lenght ; i++ )
+let x = await  lastValueFrom(this.http.get<any>(this.Domainegalerie+"getPhotos/"+ GalerieId))
+for(let i = 0 ; i < x.length ; i++ )
 {
-
-this.Photos.push(new Photo(x[i].PhotoId))
-
+  console.log(x[i].PhotoId)
+this.Photos.push(new Photo(x[i].photoId))
 }
-
-
+console.log(this.Photos)
   return this.Photos
+  }
+  async PostPhoto(pForm : FormData, GalId : number): Promise<void>{
+let x = await lastValueFrom(this.http.post<any>(this.Domainegalerie+"AddPhotoGalerie/"+GalId, pForm))
+console.log(x);
   }
 
   async Login(pLogin : LoginDTO) : Promise<void>{
@@ -100,6 +101,13 @@ this.Photos.push(new Photo(x[i].PhotoId))
 
         let x = await lastValueFrom(this.http.post<any>(this.Domainegalerie+"AddUserToGalerie/"+pGal.id+"?Username="+Username,Username))
         console.log(x)
+
+  }
+
+  async SupprimerPhoto(Photo:Photo) : Promise<void>{
+
+  let x = await lastValueFrom(this.http.delete<any>(this.Domainegalerie+"DeletePhoto/"+Photo.Photoid))
+  console.log(x);
 
   }
 }

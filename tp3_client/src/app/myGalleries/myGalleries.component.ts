@@ -1,9 +1,14 @@
+import { Photo } from './../../Models/Photo';
+import { async } from '@angular/core/testing';
 import { GaleriesInfinieServiceService } from './../Services/GaleriesInfinieService.service';
 import { Galerie } from './../../Models/Galerie';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { compilePipeFromMetadata } from '@angular/compiler';
+
+declare var Masonry : any;
+declare var ImagesLoaded : any;
 
 @Component({
   selector: 'app-myGalleries',
@@ -17,11 +22,40 @@ export class MyGalleriesComponent implements OnInit {
   galerieCréé? : Galerie;
   InputPublic? : boolean;
   InputNom? : string;
-  InputUsername? : string; 
+  InputUsername? : string;
+  PhotoSelectionner? : Photo; 
   @ViewChild("myPictureUpdate", {static:false}) pictureUpdate ? : ElementRef;
-  @ViewChild("fileUploadPicture", {static:false}) AddedPicture ? : ElementRef;                                         
+  @ViewChild("fileUploadPicture", {static:false}) AddedPicture ? : ElementRef;
+  @ViewChild('masongrid') masongrid?: ElementRef; 
+  @ViewChildren('masongriditems') masongriditems?: QueryList<any>; 
+                                         
        
   constructor(public http : HttpClient, public service : GaleriesInfinieServiceService) { }
+
+  ngAfterViewInit() 
+   { 
+    this.masongriditems?.changes.subscribe(e => { 
+    this.initMasonry(); 
+   }); 
+     
+     if(this.masongriditems!.length > 0) { 
+     this.initMasonry(); 
+     } 
+    } 
+    
+    initMasonry() 
+    { 
+     var grid = this.masongrid?.nativeElement; 
+    var msnry = new Masonry( grid, { 
+     itemSelector: '.grid-item',
+     columnWidth:320, // À modifier si le résultat est moche
+     gutter:3
+     });
+    
+    ImagesLoaded( grid ).on( 'progress', function() { 
+     msnry.layout(); 
+     }); 
+   } 
 
   ngOnInit() {
 this.getGalleries()
@@ -44,9 +78,15 @@ this.getGalleries()
                 this.getGalleries()}
                 else{ console.log("Aucune galerie selectionnée")}
         }
+        SelectPhoto(photo : Photo){
+               this.PhotoSelectionner = photo
+        }
 
-     SelectGalerie(pGal : Galerie) : void{
+  async  SelectGalerie(pGal : Galerie) : Promise<void>{
            this.galerieSelectionner = pGal
+           this.galerieSelectionner.Photos = [];
+           this.galerieSelectionner.Photos = await this.service.getPhotos(this.galerieSelectionner.id); 
+           console.log(this.galerieSelectionner.Photos)
     }
 
     async RendrePublique() : Promise<void>{
@@ -126,10 +166,34 @@ this.getGalleries()
     }
 
     async AddPicture() : Promise<void>{
+if  (this.AddedPicture !=undefined && this.galerieSelectionner != undefined)
+{
+  let file = this.AddedPicture.nativeElement.files[0];
+  if(file == null)
+  {
+    console.log("Pas d'image dans le upload")
+  }
+  else{
+    let formdata = new FormData();
+    formdata.append("MonImage", file, file.name)
+    
+    await this.service.PostPhoto(formdata,this.galerieSelectionner?.id)
+    await this.SelectGalerie(this.galerieSelectionner)
+
+  }
+}
 
 
+    
+  }
 
-    }
+  async DeletePicture(Photo : Photo) : Promise<void> {
+if  (this.galerieSelectionner != undefined){
+        await this.service.SupprimerPhoto(Photo);
+        await this.SelectGalerie(this.galerieSelectionner)
+}
+  }
+
     async AjouterUtilisateur() : Promise<void>{
    if(this.InputUsername != undefined && this.galerieSelectionner != undefined)
       {
