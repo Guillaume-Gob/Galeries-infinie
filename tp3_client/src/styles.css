@@ -102,3 +102,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .option button{
     margin:0px 10px 0px 10px;
 }
+
+.grid-item {
+    margin-bottom: 3px;
+}
+
+.grid-item img {
+    width: 310px;
+}

@@ -20,8 +20,8 @@
     <div class="col-4">
       <!-- Photo de la galerie sélectionnée (Partie 2 !) -->
       <h2>Photos de la galerie sélectionnée <mat-icon>photo_camera</mat-icon></h2>
+        <h3 *ngIf="galerieSelectionner != null">{{galerieSelectionner.name}}</h3>
       <div *ngIf="galerieSelectionner != null" class="grid" #masongrid>
-        <p>{{galerieSelectionner.name}}</p>
         <!-- Photos de la galeries -->
         <img (click)="SelectPhoto(i)"  [src]="'https://localhost:7183/api/Galeries/GetImagePhoto/miniature/'+ i.Photoid" #masongriditems class="grid-item" *ngFor="let i of galerieSelectionner.Photos">
 

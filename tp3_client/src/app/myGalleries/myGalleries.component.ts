@@ -85,6 +85,7 @@ this.getGalleries()
   async  SelectGalerie(pGal : Galerie) : Promise<void>{
            this.galerieSelectionner = pGal
            this.galerieSelectionner.Photos = [];
+           this.PhotoSelectionner = undefined;
            this.galerieSelectionner.Photos = await this.service.getPhotos(this.galerieSelectionner.id); 
            console.log(this.galerieSelectionner.Photos)
     }

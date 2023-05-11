@@ -19,6 +19,8 @@ export class PublicGalleriesComponent implements OnInit {
  @ViewChild('masongrid') masongrid?: ElementRef; 
   @ViewChildren('masongriditems') masongriditems?: QueryList<any>;
   constructor(public http : HttpClient, public service : GaleriesInfinieServiceService ) { }
+ 
+ 
   ngAfterViewInit() 
   { 
    this.masongriditems?.changes.subscribe(e => { 
@@ -35,7 +37,7 @@ export class PublicGalleriesComponent implements OnInit {
     var grid = this.masongrid?.nativeElement; 
    var msnry = new Masonry( grid, { 
     itemSelector: '.grid-item',
-    columnWidth:320, // À modifier si le résultat est moche
+    columnWidth:10000, // À modifier si le résultat est moche
     gutter:3
     });
    
